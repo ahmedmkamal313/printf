@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * convert_sbase - Converts a signed long to an inputted base and stores
  *                 the result to a buffer contained in a struct.
