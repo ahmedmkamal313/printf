@@ -64,3 +64,35 @@ unsigned char get_length_value(const char *mod_ptr, char *fmt_ptr)
 
 	return (0);
 }
+
+/**
+ * get_width_value - Returns the value for a width modifier
+ * in the format string.
+ * @args: A va_list of arguments.
+ * @mod_ptr: A pointer to a possible width modifier.
+ * @fmt_ptr: A pointer to the current index of the format string.
+ * Return: If a width modifier is found - its value.
+ * Otherwise - 0.
+*/
+int get_width_value(va_list args, const char *mod_ptr, char *fmt_ptr)
+{
+	int wid_value = 0;
+
+	while ((*mod_ptr >= '0' && *mod_ptr <= '9') || (*mod_ptr == '*'))
+	{
+		(*fmt_ptr)++;
+
+		if (*mod_ptr == '*')
+		{
+			wid_value = va_arg(args, int);
+			if (wid_value <= 0)
+				return (0);
+			return (wid_value);
+		}
+		wid_value *= 10;
+		wid_value += (*mod_ptr - '0');
+		mod_ptr++;
+	}
+
+	return (wid_value);
+}
