@@ -40,3 +40,27 @@ unsigned char get_flag_value(const char *flag_ptr, char *fmt_ptr)
 
 	return (flag_result);
 }
+/**
+ * get_length_value - Returns the value for each length
+ * modifier in the format string.
+ * @mod_ptr: A pointer to a possible length modifier.
+ * @fmt_ptr: A pointer to the current index of the format string.
+ * Return: If a length modifier is found - its corresponding value.
+ *  Otherwise - 0.
+*/
+unsigned char get_length_value(const char *mod_ptr, char *fmt_ptr)
+{
+	if (*mod_ptr == ‘h’)
+	{
+		(*fmt_ptr)++;
+		return (SHORT);
+	}
+
+	else if (*mod_ptr == 'l')
+	{
+		(*fmt_ptr)++;
+		return (LONG);
+}
+
+	return (0);
+}
