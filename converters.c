@@ -1,0 +1,44 @@
+/**
+ * convert_sbase - Converts a signed long to an inputted base and stores
+ *                 the result to a buffer contained in a struct.
+ * @output_buffer: A buffer_t struct containing a character array.
+ * @number: A signed long to be converted.
+ * @base_string: A pointer to a string containing the base to convert to.
+ * @format_flags: Flag modifiers.
+ * @min_width: A width modifier.
+ * @precision: A precision modifier.
+ *
+ * Return: The number of bytes stored to the buffer.
+ */
+unsigned int convert_sbase(buffer_t *output_buffer, long int number,
+		char *base_string, unsigned char format_flags, int min_width, int precision)
+{
+	int base_size;
+	char digit, pad = '0';
+	unsigned int num_chars = 1;
+
+	for (base_size = 0; *(base_string + base_size);)
+		base_size++;
+
+	if (number >= base_size || number <= -base_size)
+		num_chars += convert_sbase(output_buffer, number / base_size, base_string,
+				format_flags, min_width - 1, precision - 1);
+
+	else
+	{
+		for (; precision > 1; precision--, min_width--) /* Handle precision */
+			num_chars += _memcpy(output_buffer, &pad, 1);
+
+		if (NEG_FLAG == 0) /* Handle width */
+		{
+			pad = (ZERO_FLAG == 1) ? '0' : ' ';
+			for (; min_width > 1; min_width--)
+				num_chars += _memcpy(output_buffer, &pad, 1);
+		}
+	}
+
+	digit = base_string[(number < 0 ? -1 : 1) * (number % base_size)];
+	_memcpy(output_buffer, &digit, 1);
+
+	return (num_chars);
+}
