@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * ConvertChar - Converts an argument to an unsigned char and
  *             stores it to a buffer contained in a struct.
