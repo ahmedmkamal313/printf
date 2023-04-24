@@ -96,3 +96,43 @@ int get_width_value(va_list args, const char *mod_ptr, char *fmt_ptr)
 
 	return (wid_value);
 }
+
+/**
+ * get_precision_value - Returns the value for a precision
+ * modifier in the format string.
+ * @args: A va_list of arguments.
+ * @mod_ptr: A pointer to a possible precision modifier.
+ * @fmt_ptr: A pointer to the current index of the format string.
+ *
+ * Return: If a precision modifier is found - its value. 0
+ */
+int get_precision_value(va_list args, const char *mod_ptr, char *fmt_ptr)
+{
+	if (*mod_ptr != '.')
+		return (-1);
+	mod_ptr++;
+	(*fmt_ptr)++;
+	if ((*mod_ptr <= '0' || *mod_ptr > '9') && *mod_ptr != '*')
+	{
+		if (*mod_ptr == '0')
+			(*fmt_ptr)++;
+		return (0);
+	}
+	while ((*mod_ptr >= '0' && *mod_ptr <= '9') ||
+			(*mod_ptr == '*'))
+	{
+		(*fmt_ptr)++;
+
+		if (*mod_ptr == '*')
+		{
+			prec_value = va_arg(args, int);
+			if (prec_value <= 0)
+				return (0);
+			return (prec_value);
+		}
+		prec_value *= 10;
+		prec_value += (*mod_ptr - '0');
+		mod_ptr++;
+	}
+	return (prec_value);
+}
