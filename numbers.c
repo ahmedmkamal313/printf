@@ -96,5 +96,76 @@ unsigned int convert_binary(va_list params, buffer_t *buffer,
 
 	number = va_arg(params, unsigned int);
 	(void)length;
-	return (convert_ubase(buffer, number, “01”, modifiers, width, precision));
+	return (convert_ubase(buffer, number, "01", modifiers, width, precision));
+}
+
+/**
+ * convert_octal - Converts an unsigned int to octal and
+ * stores it to a buffer contained in a struct.
+ * @params: A va_list poinitng to the argument to be converted.
+ * @modifiers: Flag modifiers.
+ * @width: A width modifier.
+ * @precision: A precision modifier.
+ * @length: A length modifier.
+ * @buffer: A buffer_t struct containing a character array.
+ * Return: The number of bytes stored to the buffer.
+ */
+
+unsigned int convert_octal(va_list params, buffer_t *buffer,
+		 unsigned char modifiers, int width, int precision, unsigned char length)
+{
+	unsigned long int number;
+	unsigned int result = 0;
+	char zero = ‘0’;
+
+	if (length == LONG)
+		number = va_arg(params, unsigned long int);
+	else
+		number = va_arg(params, unsigned int);
+
+	if (length == SHORT)
+		number = (unsigned short)number;
+
+	if (HASH_FLAG == 1 && number != 0)
+		result += _memcpy(buffer, &zero, 1);
+
+	if (!(number == 0 && precision == 0))
+		result += convert_ubase(buffer, number, "01234567",
+				modifiers, width, precision);
+	result += print_neg_width(buffer, result, modifiers, width);
+	return (result);
+}
+
+/**
+ * convert_decimal - Converts an unsigned int argument to decimal and
+ * stores it to a buffer contained in a struct.
+ * @params: A va_list pointing to the argument to be converted.
+ * @modifiers: Flag modifiers.
+ * @width: A width modifier.
+ * @precision: A precision modifier.
+ * @length: A length modifier.
+ * @buffer: A buffer_t struct containing a character array.
+ * Return: The number of bytes stored to the buffer
+ */
+
+unsigned int convert_decimal(va_list params, buffer_t *buffer,
+		unsigned char modifiers, int width, int precision, unsigned char length)
+{
+	unsigned long int number;
+	unsigned int result = 0;
+
+	if (length == LONG)
+		number = va_arg(params, unsigned long int);
+	else
+		number = va_arg(params, unsigned int);
+
+	if (length == SHORT)
+		number = (unsigned short)number;
+	if (!(number == 0 && precision == 0))
+		result += convert_ubase(buffer, number, "0123456789",
+				modifiers, width, precision);
+
+	result += print_neg_width(buffer, result, modifiers, width);
+
+	return (result);
 }
