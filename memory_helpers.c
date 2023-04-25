@@ -32,3 +32,29 @@ unsigned int _memcpy(buffer_t *output, const char *src, unsigned int n)
 
 	return (n);
 }
+
+/**
+ * free_buffer - Frees a buffer_t struct.
+ * @output: The buffer_t struct to be freed.
+ */
+
+buffer_t *init_buffer(void)
+{
+	buffer_t *output;
+
+	output = malloc(sizeof(buffer_t));
+	if (output == NULL)
+		return (NULL);
+
+	output->buffer = malloc(sizeof(char) * 1024);
+	if (output->buffer == NULL)
+	{
+		free(output);
+		return (NULL);
+	}
+
+	output->start = output->buffer;
+	output->len = 0;
+
+	return (output);
+}
