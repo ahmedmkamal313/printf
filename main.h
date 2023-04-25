@@ -82,9 +82,8 @@ unsigned int ConvertHexLower(va_list arguments, buffer_t *buffer,
 		unsigned char flags, int width, int precision, unsigned char length);
 unsigned int ConvertHexUpper(va_list arguments, buffer_t *buffer,
 		unsigned char flags, int width, int precision, unsigned char length);
-unsigned int convert_di(va_list args, buffer_t *output_buffer,
-		unsigned char flags, int width, int precision, unsigned char length);
-static inline unsigned int get_digit_count(long int number);
+unsigned int convert_di(va_list args, buffer_t *output,
+                unsigned char flags, int wid, int prec, unsigned char len);
 unsigned int convert_binary(va_list params, buffer_t *buffer,
 		unsigned char modifiers, int width, int precision, unsigned char length);
 unsigned int convert_octal(va_list params, buffer_t *buffer,
