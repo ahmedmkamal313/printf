@@ -161,6 +161,7 @@ unsigned int convert_S(va_list args, buffer_t *output,
 {
 	char *str, *null = "(null)", *hex = "\\x", zero = '0';
 	int size, index;
+	unsigned int ret = 0;
 
 	(void)len;
 	str = va_arg(args, char *);
@@ -181,7 +182,7 @@ unsigned int convert_S(va_list args, buffer_t *output,
 			if (*(str + index) < 16)
 				ret += _memcpy(output, &zero, 1);
 			ret += convert_ubase(output, *(str + index),
-					"0123456789ABCDEF", flags, 0, 0);
+					"0123456789ABCDEF", format_flags, 0, 0);
 			continue;
 		}
 		ret += _memcpy(output, (str + index), 1);
