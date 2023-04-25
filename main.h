@@ -65,25 +65,25 @@ int _printf(const char *format, ...);
 
 /* Conversion Specifier Functions */
 unsigned int ConvertChar(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length);
+		unsigned char format_flags, int width, int precision, unsigned char length);
 unsigned int store_string(va_list args, buffer_t *output,
-		unsigned char flags, int wid, int prec, unsigned char len);
+		unsigned char format_flags, int wid, int prec, unsigned char len);
 unsigned int convert_r(va_list args, buffer_t *output,
-		unsigned char flags, int wid, int prec, unsigned char len);
+		unsigned char format_flags, int wid, int prec, unsigned char len);
 unsigned int convert_R(va_list args, buffer_t *output,
-		unsigned char flags, int wid, int prec, unsigned char len);
+		unsigned char format_flags, int wid, int prec, unsigned char len);
 unsigned int convert_S(va_list args, buffer_t *output,
-		unsigned char flags, int wid, int prec, unsigned char len);
+		unsigned char format_flags, int wid, int prec, unsigned char len);
 unsigned int ConvertPercent(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length);
+		unsigned char format_flags, int width, int precision, unsigned char length);
 unsigned int ConvertPointer(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length);
+		unsigned char format_flags, int width, int precision, unsigned char length);
 unsigned int ConvertHexLower(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length);
+		unsigned char format_flags, int width, int precision, unsigned char length);
 unsigned int ConvertHexUpper(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length);
+		unsigned char format_flags, int width, int precision, unsigned char length);
 unsigned int convert_di(va_list args, buffer_t *output,
-		unsigned char flags, int wid, int prec, unsigned char len);
+		unsigned char format_flags, int wid, int prec, unsigned char len);
 unsigned int convert_binary(va_list params, buffer_t *buffer,
 		unsigned char modifiers, int width, int precision, unsigned char length);
 unsigned int convert_octal(va_list params, buffer_t *buffer,
