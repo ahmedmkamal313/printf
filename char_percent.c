@@ -5,7 +5,7 @@
  *             stores it to a buffer contained in a struct.
  * @arguments: A va_list pointing to the argument to be converted.
  * @buffer: A buffer_t struct containing a character array.
- * @flags: Flag modifiers.
+ * @format_flags: Flag modifiers.
  * @width: A width modifier.
  * @precision: A precision modifier.
  * @length: A length modifier.
@@ -13,7 +13,7 @@
  * Return: The number of bytes stored to the buffer.
  */
 unsigned int ConvertChar(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length)
+		unsigned char format_flags, int width, int precision, unsigned char length)
 {
 	char character;
 	unsigned int bytes = 0;
@@ -23,9 +23,9 @@ unsigned int ConvertChar(va_list arguments, buffer_t *buffer,
 
 	character = va_arg(arguments, int);
 
-	bytes += print_width(buffer, bytes, flags, width);
+	bytes += print_width(buffer, bytes, format_flags, width);
 	bytes += _memcpy(buffer, &character, 1);
-	bytes += print_neg_width(buffer, bytes, flags, width);
+	bytes += print_neg_width(buffer, bytes, format_flags, width);
 
 	return (bytes);
 }
@@ -35,7 +35,7 @@ unsigned int ConvertChar(va_list arguments, buffer_t *buffer,
  *                   buffer contained in a struct.
  * @arguments: A va_list pointing to the argument to be converted.
  * @buffer: A buffer_t struct containing a character array.
- * @flags: Flag modifiers.
+ * @format_flags: Flag modifiers.
  * @width: A width modifier.
  * @precision: A precision modifier.
  * @length: A length modifier.
@@ -43,7 +43,7 @@ unsigned int ConvertChar(va_list arguments, buffer_t *buffer,
  * Return: The number of bytes stored to the buffer (always 1).
  */
 unsigned int ConvertPercent(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length)
+		unsigned char format_flags, int width, int precision, unsigned char length)
 {
 	char percent_sign = '%';
 	unsigned int bytes = 0;
@@ -52,9 +52,9 @@ unsigned int ConvertPercent(va_list arguments, buffer_t *buffer,
 	(void)precision;
 	(void)length;
 
-	bytes += print_width(buffer, bytes, flags, width);
+	bytes += print_width(buffer, bytes, format_flags, width);
 	bytes += _memcpy(buffer, &percent_sign, 1);
-	bytes += print_neg_width(buffer, bytes, flags, width);
+	bytes += print_neg_width(buffer, bytes, format_flags, width);
 
 	return (bytes);
 }
@@ -64,7 +64,7 @@ unsigned int ConvertPercent(va_list arguments, buffer_t *buffer,
  *             stores it to a buffer contained in a struct.
  * @arguments: A va_list pointing to the argument to be converted.
  * @buffer: A buffer_t struct containing a character array.
- * @flags: Flag modifiers.
+ * @format_flags: Flag modifiers.
  * @width: A width modifier.
  * @precision: A precision modifier.
  * @length: A length modifier.
@@ -72,7 +72,7 @@ unsigned int ConvertPercent(va_list arguments, buffer_t *buffer,
  * Return: The number of bytes stored to the buffer.
  */
 unsigned int ConvertPointer(va_list arguments, buffer_t *buffer,
-		unsigned char flags, int width, int precision, unsigned char length)
+		unsigned char format_flags, int width, int precision, unsigned char length)
 {
 	char *null_string = "(nil)";
 	unsigned long int address;
@@ -84,10 +84,10 @@ unsigned int ConvertPointer(va_list arguments, buffer_t *buffer,
 	if (address == '\0')
 		return (_memcpy(buffer, null_string, 5));
 
-	flags |= 32;
+	format_flags |= 32;
 	bytes += convert_ubase(buffer, address, "0123456789abcdef",
-			flags, width, precision);
-	bytes += print_neg_width(buffer, bytes, flags, width);
+			format_flags, width, precision);
+	bytes += print_neg_width(buffer, bytes, format_flags, width);
 
 	return (bytes);
 }

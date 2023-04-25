@@ -65,6 +65,9 @@ unsigned int convert_r(va_list args, buffer_t *output,
 	(void)format_flags;
 	(void)len;
 
+	if (output == NULL || output->start == NULL)
+		return (0);
+
 	str = va_arg(args, char *);
 	if (str == NULL)
 		return (_memcpy(output, null, 6));

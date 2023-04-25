@@ -62,6 +62,8 @@ typedef struct flag_s
 } flag_t;
 
 int _printf(const char *format, ...);
+void cleanup(va_list args, buffer_t *output);
+int run_printf(const char *format, va_list args, buffer_t *output);
 
 /* Conversion Specifier Functions */
 unsigned int ConvertChar(va_list arguments, buffer_t *buffer,
@@ -92,6 +94,12 @@ unsigned int convert_decimal(va_list params, buffer_t *buffer,
 		unsigned char modifiers, int width, int precision, unsigned char length);
 
 /* Handlers */
+/**
+ * handle_specifiers - handle.
+ * @flag_ptr: A pointer to a potential string of flags.
+ * @fmt_ptr: A pointer to the current index of the format string.
+ * Return: If flag characters are found - a bitwise value of the flags.
+ */
 unsigned char get_flag_value(const char *flag_ptr, char *fmt_ptr);
 unsigned char get_length_value(const char *mod_ptr, char *fmt_ptr);
 int get_width_value(va_list args, const char *mod_ptr, char *fmt_ptr);

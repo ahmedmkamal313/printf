@@ -23,18 +23,18 @@ unsigned char get_flag_value(const char *flag_ptr, char *fmt_ptr)
 	for (i = 0; flag_ptr[i]; i++)
 	{
 		for (k = 0; flag_list[k].flag != 0; k++)
-	{
-		if (flag_ptr[i] == flag_list[k].flag)
 		{
-			(*fmt_ptr)++;
-			if (flag_result == 0)
-				flag_result = flag_list[k].value;
-			else
-				flag_result |= flag_list[k].value;
-			break;
+			if (flag_ptr[i] == flag_list[k].flag)
+			{
+				(*fmt_ptr)++;
+				if (flag_result == 0)
+					flag_result = flag_list[k].value;
+				else
+					flag_result |= flag_list[k].value;
+				break;
+			}
 		}
-	}
-	if (flag_list[k].value == 0)
+		if (flag_list[k].value == 0)
 		break;
 	}
 
@@ -60,7 +60,7 @@ unsigned char get_length_value(const char *mod_ptr, char *fmt_ptr)
 	{
 		(*fmt_ptr)++;
 		return (LONG);
-}
+	}
 
 	return (0);
 }

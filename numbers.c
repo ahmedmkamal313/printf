@@ -82,7 +82,7 @@ unsigned int convert_binary(va_list params, buffer_t *buffer,
  * convert_octal - Converts an unsigned int to octal and
  * stores it to a buffer contained in a struct.
  * @params: A va_list poinitng to the argument to be converted.
- * @modifiers: Flag modifiers.
+ * @format_flags: Flag modifiers.
  * @width: A width modifier.
  * @precision: A precision modifier.
  * @length: A length modifier.

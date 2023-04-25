@@ -19,6 +19,7 @@ void cleanup(va_list args, buffer_t *output)
  * @args: A va_list of arguments.
  *
  * Return: The number of characters stored to output.
+ * @function int - function.
  */
 int run_printf(const char *format, va_list args, buffer_t *output)
 {
