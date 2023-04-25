@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * convert_di - Converts an argument to a signed int and
  *              stores it to a buffer contained in a struct.
@@ -73,4 +75,26 @@ static inline unsigned int get_digit_count(long int number)
 	count += (SPACE_FLAG == 1 && number >= 0) ? 1 : 0;
 
 	return (count);
+}
+
+/**
+ * convert_binary - Converts an unsigned int argument to binary
+ * and stores it to a buffer contained in a struct.
+ * @params: A va_list pointing to the argument to be converted.
+ * @modifiers: Flag modifiers.
+ * @width: A width modifier.
+ * @precision: A precision modifier.
+ * @length: A length modifier.
+ * @buffer: A buffer_t struct containing a character array.
+ * Return: The number of bytes stored to the buffer.
+ */
+
+unsigned int convert_binary(va_list params, buffer_t *buffer,
+		unsigned char modifiers, int width, int precision, unsigned char length)
+{
+	unsigned int number;
+
+	number = va_arg(params, unsigned int);
+	(void)length;
+	return (convert_ubase(buffer, number, “01”, modifiers, width, precision));
 }
