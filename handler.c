@@ -138,9 +138,9 @@ int get_precision_value(va_list args, const char *mod_ptr, char *fmt_ptr)
 }
 
 /**
- * handle_specifiers - Matches a conversion specifier with
- * a corresponding conversion function.
- * @specifier: A pointer to a potential conversion specifier.
+ * handle_specifiers - returns a pointer to a function that can convert
+ * an argument of a given type to a string and store it in a buffer
+ * @specifier: the format specifier character.
  * @int: int
  * @int: int
  * @char: char
@@ -152,7 +152,8 @@ int get_precision_value(va_list args, const char *mod_ptr, char *fmt_ptr)
 unsigned int(*handle_specifiers(const char *specifier))(va_list, buffer_t *,
 		unsigned char, int, int, unsigned char)
 {
-	int i;
+	int index;
+
 	converter_t converters[] = {
 		{'c', convert_c},
 		{'s', convert_s},
@@ -171,10 +172,10 @@ unsigned int(*handle_specifiers(const char *specifier))(va_list, buffer_t *,
 		{0, NULL}
 	};
 
-	for (i = 0; converters[i].func; i++)
+	for (index = 0; converters[index].func; index++)
 	{
-		if (converters[i].specifier == *specifier)
-			return (converters[i].func);
+		if (converters[index].specifier == *specifier)
+			return (converters[index].func);
 	}
 
 	return (NULL);
