@@ -4,7 +4,7 @@
  * convert_di - Converts an argument to a signed int and
  *              stores it to a buffer contained in a struct.
  * @args: A va_list pointing to the argument to be converted.
- * @flags: Flag modifiers.
+ * @format_flags: Flag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A length modifier.
@@ -13,7 +13,7 @@
  * Return: The number of bytes stored to the buffer.
  */
 unsigned int convert_di(va_list args, buffer_t *output,
-		unsigned char flags, int wid, int prec, unsigned char len)
+		unsigned char format_flags, int wid, int prec, unsigned char len)
 {
 	long int d, copy;
 	unsigned int ret = 0, count = 0;
@@ -52,8 +52,8 @@ unsigned int convert_di(va_list args, buffer_t *output,
 	if (ZERO_FLAG == 0 && (PLUS_FLAG == 1 && d >= 0))
 		ret += _memcpy(output, &plus, 1);
 	if (!(d == 0 && prec == 0))
-		ret += convert_sbase(output, d, "0123456789", flags, 0, prec);
-	ret += print_neg_width(output, ret, flags, wid);
+		ret += convert_sbase(output, d, "0123456789", format_flags, 0, prec);
+	ret += print_neg_width(output, ret, format_flags, wid);
 	return (ret);
 }
 /**
@@ -91,11 +91,11 @@ unsigned int convert_binary(va_list params, buffer_t *buffer,
  */
 
 unsigned int convert_octal(va_list params, buffer_t *buffer,
-		 unsigned char modifiers, int width, int precision, unsigned char length)
+		 unsigned char format_flags, int width, int precision, unsigned char length)
 {
 	unsigned long int number;
 	unsigned int result = 0;
-	char zero = ‘0’;
+	char zero = '0';
 
 	if (length == LONG)
 		number = va_arg(params, unsigned long int);
@@ -110,8 +110,8 @@ unsigned int convert_octal(va_list params, buffer_t *buffer,
 
 	if (!(number == 0 && precision == 0))
 		result += convert_ubase(buffer, number, "01234567",
-				modifiers, width, precision);
-	result += print_neg_width(buffer, result, modifiers, width);
+				format_flags, width, precision);
+	result += print_neg_width(buffer, result, format_flags, width);
 	return (result);
 }
 

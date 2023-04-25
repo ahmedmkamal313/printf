@@ -2,62 +2,62 @@
 
 /**
  * cleanup - Peforms cleanup operations for _printf.
- * @arg_list: A va_list of arguments provided to _printf.
- * @buffer: A buffer_t struct containing the output string.
+ * @args: A va_list of arguments provided to _printf.
+ * @output: A buffer_t struct.
  */
-void cleanup(va_list arg_list, buffer_t *buffer)
+void cleanup(va_list args, buffer_t *output)
 {
-	va_end(arg_list);
-	write(1, buffer->start, buffer->len);
-	free_buffer(buffer);
+	va_end(args);
+	write(1, output->start, output->len);
+	free_buffer(output);
 }
 
 /**
  * run_printf - Reads through the format string for _printf.
  * @format: Character string to print - may contain directives.
  * @output: A buffer_t struct containing a buffer.
- * @arg_list: A va_list of arguments.
- * int - i
+ * @args: A va_list of arguments.
+ *
  * Return: The number of characters stored to output.
  */
-int run_printf(const char *format, va_list arg_list, buffer_t *output)
+int run_printf(const char *format, va_list args, buffer_t *output)
 {
-	int index, width, precision, result = 0;
-	char offset;
-	unsigned char flags, length;
-	unsigned int (*converter)(va_list, buffer_t *, unsigned char,
-			int, int, unsigned char);
+	int i, wid, prec, ret = 0;
+	char tmp;
+	unsigned char flags, len;
+	unsigned int (*f)(va_list, buffer_t *,
+			unsigned char, int, int, unsigned char);
 
-	for (index = 0; *(format + index); index++)
+	for (i = 0; *(format + i); i++)
 	{
-		length = 0;
-		if (*(format + index) == '%')
+		len = 0;
+		if (*(format + i) == '%')
 		{
-			offset = 0;
-			flags = handle_flags(format + index + 1, &offset);
-			width = handle_width(arg_list, format + index + offset + 1, &offset);
-			precision = handle_precision(arg_list, format + index + offset + 1,
-					&offset);
-			length = handle_length(format + index + offset + 1, &offset);
+			tmp = 0;
+			flags = get_flag_value(format + i + 1, &tmp);
+			wid = get_width_value(args, format + i + tmp + 1, &tmp);
+			prec = get_precision_value(args, format + i + tmp + 1,
+					&tmp);
+			len = get_length_value(format + i + tmp + 1, &tmp);
 
-			converter = handle_specifiers(format + index + offset + 1);
-			if (converter != NULL)
+			f = handle_specifiers(format + i + tmp + 1);
+			if (f != NULL)
 			{
-				index += offset + 1;
-				result += converter(arg_list, output, flags, width, precision, length);
+				i += tmp + 1;
+				ret += f(args, output, flags, wid, prec, len);
 				continue;
 			}
-			else if (*(format + index + offset + 1) == '\0')
+			else if (*(format + i + tmp + 1) == '\0')
 			{
-				result = -1;
+				ret = -1;
 				break;
 			}
 		}
-		result += _memcpy(output, (format + index), 1);
-		index += (length != 0) ? 1 : 0;
+		ret += _memcpy(output, (format + i), 1);
+		i += (len != 0) ? 1 : 0;
 	}
-	cleanup(arg_list, output);
-	return (result);
+	cleanup(args, output);
+	return (ret);
 }
 
 /**
@@ -68,19 +68,19 @@ int run_printf(const char *format, va_list arg_list, buffer_t *output)
  */
 int _printf(const char *format, ...)
 {
-	buffer_t *buffer;
-	va_list arg_list;
+	buffer_t *output;
+	va_list args;
 	int result;
 
 	if (format == NULL)
 		return (-1);
-	buffer = init_buffer();
-	if (buffer == NULL)
+	output = init_buffer();
+	if (output == NULL)
 		return (-1);
 
-	va_start(arg_list, format);
+	va_start(args, format);
 
-	result = run_printf(format, arg_list, buffer);
+	result = run_printf(format, args, output);
 
 	return (result);
 }

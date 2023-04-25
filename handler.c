@@ -50,7 +50,7 @@ unsigned char get_flag_value(const char *flag_ptr, char *fmt_ptr)
 */
 unsigned char get_length_value(const char *mod_ptr, char *fmt_ptr)
 {
-	if (*mod_ptr == ‘h’)
+	if (*mod_ptr == 'h')
 	{
 		(*fmt_ptr)++;
 		return (SHORT);
@@ -108,6 +108,8 @@ int get_width_value(va_list args, const char *mod_ptr, char *fmt_ptr)
  */
 int get_precision_value(va_list args, const char *mod_ptr, char *fmt_ptr)
 {
+	int prec_value = 0;
+
 	if (*mod_ptr != '.')
 		return (-1);
 	mod_ptr++;
@@ -155,18 +157,18 @@ unsigned int(*handle_specifiers(const char *specifier))(va_list, buffer_t *,
 	int index;
 
 	converter_t converters[] = {
-		{'c', convert_c},
-		{'s', convert_s},
+		{'c', ConvertChar},
+		{'s', store_string},
 		{'d', convert_di},
 		{'i', convert_di},
-		{'%', convert_percent},
-		{'b', convert_b},
-		{'u', convert_u},
-		{'o', convert_o},
-		{'x', convert_x},
-		{'X', convert_X},
+		{'%', ConvertPercent},
+		{'b', convert_binary},
+		{'u', convert_decimal},
+		{'o', convert_octal},
+		{'x', ConvertHexLower},
+		{'X', ConvertHexUpper},
 		{'S', convert_S},
-		{'p', convert_p},
+		{'p', ConvertPointer},
 		{'r', convert_r},
 		{'R', convert_R},
 		{0, NULL}
