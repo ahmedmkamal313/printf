@@ -4,7 +4,7 @@
  * store_string - Stores an argument as a string to a buffer contained.
  * @args: A va_list pointing to the argument to be stored.
  * @output: A buffer_t struct containing a character array.
- * @flags: format_flag modifiers.
+ * @format_flags: format_flag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A length modifier.
@@ -47,7 +47,7 @@ unsigned int store_string(va_list args, buffer_t *output,
  * convert_r - Reverses a string and stores it
  *             to a buffer contained in a struct.
  * @args: A va_list pointing to the string to be reversed.
- * @flags: format_flag modifiers.
+ * @format_flags: format_flag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A length modifier.
@@ -91,7 +91,7 @@ unsigned int convert_r(va_list args, buffer_t *output,
  * convert_R - Converts a string to ROT13 and stores
  *             it to a buffer contained in a struct.
  * @args: A va_list pointing to the string to be converted.
- * @flags: format_flag modifiers.
+ * @format_flags: format_flag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A lenth modifier.
@@ -144,7 +144,7 @@ unsigned int convert_R(va_list args, buffer_t *output,
  * convert_S - Converts an argument to a string and
  *             stores it to a buffer contained in a struct.
  * @args: A va_list pointing to the argument to be converted.
- * @flags: fotmat_flag modifiers.
+ * @format_flags: fotmat_flag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A length modifier.
